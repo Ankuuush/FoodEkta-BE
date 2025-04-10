@@ -1,0 +1,12 @@
+# Ignore node_modules directory
+node_modules/
+package-lock.json
+# Ignore built files
+/dist
+
+# Ignore environment variables file
+.env
+
+logfile.log
+
+
