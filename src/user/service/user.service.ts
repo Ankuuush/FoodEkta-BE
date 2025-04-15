@@ -24,7 +24,7 @@ export const signup = async (req: Request, res: Response) => {
     lastName,
     emailId,
     phoneNumber,
-    userId: "124",
+    userId: req.user.user_id,
     address,
     userType,
     userRole,
@@ -32,9 +32,9 @@ export const signup = async (req: Request, res: Response) => {
     dob,
     lastLogin: Date.now(),
     profileCompleted: true,
-    createdById: "124",
+    createdById: req.user.user_id,
     createdDate: Date.now(),
-    lastModifiedById: "124",
+    lastModifiedById: req.user.user_id,
     lastModifiedDate: Date.now(),
     isActive: true,
   });
@@ -88,7 +88,7 @@ export const fetchUser = async (req: Request, res: Response) => {
   const id = req.params.id;
   logger.debug(`Fetching user details for id: ${id}`);
 
-  const user = await UserModel.findOne({ _id:id });
+  const user = await UserModel.findOne({ userId:id });
 
   if (!user || !user.isActive ) {
     logger.warn(`User with id ${id} not found`);
@@ -105,7 +105,7 @@ export const updateUser = async (req: Request, res: Response) => {
   const id = req.params.id;
   logger.debug(`Updating user details for id: ${id}`);
 
-  const user = await UserModel.findOne({ _id:id });
+  const user = await UserModel.findOne({ userId:id });
 
   if (!user || !user.isActive) {
     logger.warn(`User with id ${id} not found`);
@@ -140,7 +140,7 @@ export const deleteUser = async (req: Request, res: Response) => {
   const id = req.params.id;
   logger.debug(`Fetching user details for id: ${id}`);
 
-  const user = await UserModel.findOne({ _id:id });
+  const user = await UserModel.findOne({ userId:id });
 
   if (!user || !user.isActive) {
     logger.warn(`User with id ${id} not found`);

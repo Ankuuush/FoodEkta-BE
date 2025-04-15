@@ -24,7 +24,7 @@ export const isLoggedIn = async (
   try {
     console.log("tokenn",token.split(" ")[1])
     const decodedToken = await admin.auth().verifyIdToken(token.split(" ")[1]);
-    logger.debug("Authentication Successful");
+    logger.info("Authentication Successful",decodedToken);
     req.user = decodedToken;
     next();
   } catch (error) {
