@@ -1,6 +1,7 @@
 import { logger } from "../../common/logger/logger";
 import { NextFunction, Request, Response } from "express";
 import * as foodService from "../service/food.service";
+import responder from "../../common/utils/responder";
 
 export const createFood = async (
   req: Request,
@@ -39,6 +40,7 @@ export const getAllFoods = async (
     foodService.getAllFoods(req, res);
   } catch (error) {
     logger.error(error);
+    responder.error(res, error, 500);
     next(error);
   }
 };

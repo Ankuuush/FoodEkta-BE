@@ -1,6 +1,8 @@
 import { logger } from "../../common/logger/logger";
 import { Request, Response } from "express";
 import { FoodModel } from "../model/food.model";
+import { validateFoods } from "../../food/validators/foods";
+import responder from "../../common/utils/responder";
 
 export const createFood = async (req: Request, res: Response) => {
   logger.info("Entered create food service");
@@ -33,14 +35,10 @@ export const getFood = async (req: Request, res: Response) => {
 export const getAllFoods = async (req: Request, res: Response) => {
   logger.debug(`Fetching all foods`);
 
-  const food = await FoodModel.find({isActive:true});
+  const foods = await FoodModel.find({ isActive: true }).select("-__v");
 
-  if (!food ) {
-    logger.warn(`Food  not found`);
-    return res.status(404).json({ message: "Food not found" });
-  }
+  logger.info(`Foods fetched successfully`, foods);
+  validateFoods(foods);
 
-  logger.info(`Foods fetched successfully`);
-
-  res.status(200).json(food);
+  responder.success(res, foods, 200);
 };
