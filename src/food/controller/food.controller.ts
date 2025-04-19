@@ -30,6 +30,19 @@ export const getFood = async (
     next(error);
   }
 };
+export const updateFood = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    logger.info("Entering the put food method");
+    foodService.updateFood(req, res);
+  } catch (error) {
+    logger.error(error);
+    next(error);
+  }
+};
 export const getAllFoods = async (
   req: Request,
   res: Response,

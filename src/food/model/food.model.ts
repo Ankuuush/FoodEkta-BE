@@ -10,9 +10,8 @@ const FoodSchema = new Schema({
   },
   expiryDate: { type: Date, required: true },
   img: { type: String },
+  description: { type: String },
   location: { type: String, required: true },
-  contactPerson: { type: String, required: true },
-  phoneNumber: { type: String, required: true },
   isActive: { type: Boolean, required: true },
   userId: {
     type:String,

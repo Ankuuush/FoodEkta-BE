@@ -1,7 +1,7 @@
 import { logger } from "../../common/logger/logger";
 import { Request, Response } from "express";
 import { FoodModel } from "../model/food.model";
-import { validateFoods } from "../../food/validators/foods";
+import { validateFood, validateFoods } from "../../food/validators/foods";
 import responder from "../../common/utils/responder";
 
 export const createFood = async (req: Request, res: Response) => {
@@ -32,12 +32,27 @@ export const getFood = async (req: Request, res: Response) => {
 
   res.status(200).json(food);
 };
+
+export const updateFood = async (req: Request, res: Response) => {
+  const _id = req.params.id;
+  logger.debug(`Updating food for id: ${_id}`);
+
+  const updateData = req.body;
+
+  const food = await FoodModel.findByIdAndUpdate( _id, updateData );
+  validateFood(food);
+
+  logger.info(`Food details fetched and updated successfully for id: ${_id}`);
+
+  responder.success(res, food, 200);
+};
+
 export const getAllFoods = async (req: Request, res: Response) => {
   logger.debug(`Fetching all foods`);
 
-  const foods = await FoodModel.find({ isActive: true }).select("-__v");
+  const foods = await FoodModel.find({ isActive: true }).select("-__v").lean();
 
-  logger.info(`Foods fetched successfully`, foods);
+  logger.info(`Foods fetched successfully`);
   validateFoods(foods);
 
   responder.success(res, foods, 200);
