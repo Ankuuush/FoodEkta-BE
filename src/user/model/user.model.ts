@@ -1,16 +1,9 @@
 import mongoose, { Schema } from "mongoose";
-import { metaDataSchema } from "./metaData.model";
-import UserI from "user/interface/userEntity";
+import { metaDataSchema } from "../../common/model/metaData.model";
+import UserI from "../interface/userEntity";
+import { addressSchema } from "../../common/model/address.model";
 
-const addressSchema = new Schema({
-  addressLine1: { type: String, required: true },
-  addressLine2: { type: String },
-  addressLine3: { type: String },
-  city: { type: String, required: true },
-  state: { type: String, required: true },
-  country: { type: String, required: true },
-  pinCode: { type: String, required: true },
-});
+
 
 const UserSchema = new Schema<UserI>({
   firstName: { type: String, required: true, trim: true },
